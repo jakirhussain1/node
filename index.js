@@ -45,7 +45,7 @@ async function run() {
             $set: {update},
       
           };
-        const result = await carCollection.updateOne(filter,updateDoc.options);
+        const result = await carCollection.updateOne(filter,updateDoc,options);
         res.send(result);
     })
 
