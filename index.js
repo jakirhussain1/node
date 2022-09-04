@@ -19,46 +19,11 @@ async function run() {
         const result = await cursor.toArray();
         res.send(result);
     })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    app.post("/service",async(req,res)=>{
+        const newUser = req.body;
+        const result = await carCollection.insertOne(newUser);
+        res.send(result);
+    })
 
 
 
