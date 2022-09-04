@@ -7,7 +7,7 @@ const cors = require("cors");
 app.use(cors())
 app.use(express.json())
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 const uri = `mongodb+srv://${process.env.APP_USER}:${process.env.APP_PASS}@cluster0.rxk7ez7.mongodb.net/?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 async function run() {
@@ -22,6 +22,12 @@ async function run() {
     app.post("/service",async(req,res)=>{
         const newUser = req.body;
         const result = await carCollection.insertOne(newUser);
+        res.send(result);
+    })
+    app.delete("/service/:id",async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id:ObjectId(id)};
+        const result = await carCollection.deleteOne(query);
         res.send(result);
     })
 
