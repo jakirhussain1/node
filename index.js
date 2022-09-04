@@ -19,6 +19,12 @@ async function run() {
         const result = await cursor.toArray();
         res.send(result);
     })
+    app.get("/service/:id",async(req,res)=>{
+        const id = req.params.id;
+        const query = {_id:ObjectId(id)};
+        const result = await carCollection.findOne(query);
+        res.send(result);
+    })
     app.post("/service",async(req,res)=>{
         const newUser = req.body;
         const result = await carCollection.insertOne(newUser);
@@ -30,7 +36,18 @@ async function run() {
         const result = await carCollection.deleteOne(query);
         res.send(result);
     })
-
+    app.put("/service/:id",async(req,res)=>{
+        const id = req.params.id;
+        const update = req.body;
+        const filter = {_id:ObjectId(id)};
+        const options = { upsert: true };
+        const updateDoc = {
+            $set: {update},
+      
+          };
+        const result = await carCollection.updateOne(filter,updateDoc.options);
+        res.send(result);
+    })
 
 
 }
